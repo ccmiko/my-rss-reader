@@ -1,0 +1,20 @@
+{
+  "name": "my-rss-reader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && ts-node esbuild.ts",
+    "debug": "ts-node src/index.ts",
+    "execute": "node ./dist/index.js"
+  },
+  "author": "",
+  "license": "GPL-3.0-only",
+  "description": "RSSリーダー作ってみた",
+  "volta": {
+    "node": "22.5.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.1",
+    "ts-node": "^10.9.2"
+  }
+}

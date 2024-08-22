@@ -1,0 +1,6 @@
+# https://github.com/DavidAnson/markdownlint/blob/v0.34.0/doc/md026.md
+no-trailing-punctuation:
+  # 見出しの末尾に許可する文字↓に定義 "されていない" 文字は見出しに使用できる
+  punctuation: '.,;:'
+  # 全ての文字を見出しに使用OKとしたい場合
+  # punctuation: false
