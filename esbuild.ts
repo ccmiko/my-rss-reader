@@ -6,7 +6,7 @@ import * as esbuild from "esbuild";
     minify: true,
     bundle: true,
     platform: "node",
-    target: ["node22"],
+    target: ["node24"],
     outfile: "dist/index.js",
   });
 })();

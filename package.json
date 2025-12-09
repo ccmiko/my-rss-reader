@@ -3,18 +3,22 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && ts-node esbuild.ts",
-    "debug": "ts-node src/index.ts",
+    "build": "rm -rf dist && tsx esbuild.ts",
+    "debug": "tsx src/index.ts",
     "execute": "node ./dist/index.js"
   },
   "author": "",
   "license": "GPL-3.0-only",
   "description": "RSSリーダー作ってみた",
   "volta": {
-    "node": "22.5.1"
+    "node": "24.9.0"
   },
   "devDependencies": {
-    "esbuild": "^0.23.1",
-    "ts-node": "^10.9.2"
+    "@types/node": "^24.10.2",
+    "esbuild": "^0.27.1",
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0"
   }
 }
