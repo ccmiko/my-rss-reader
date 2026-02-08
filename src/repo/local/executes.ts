@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from 'fs';
 
 type BeforeParseExecute = {
   id: string;
@@ -18,7 +18,7 @@ const _readFile = () => {
   const parsedData: Execute[] = data.map((v) => {
     return {
       ...v,
-      lastSucceedDt: new Date(v.lastSucceedDt),
+      lastSucceedDt: new Date(v.lastSucceedDt)
     };
   });
   return parsedData;
@@ -38,11 +38,11 @@ export const executes = {
     const data = _readFile();
     const item = data.find((v) => v.id === id);
     if (!item) {
-      throw new Error("itemがありません");
+      throw new Error('itemがありません');
     }
     const newData = data.map((v) => {
       return v.id === id ? newItem : v;
     });
     _writeFile(newData);
-  },
+  }
 };

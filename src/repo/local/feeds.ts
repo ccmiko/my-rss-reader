@@ -1,10 +1,10 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from 'fs';
 
 type Rule = {
-  key:string;
-  word:string;
-  type: "allow"|"deny"
-}
+  key: string;
+  word: string;
+  type: 'allow' | 'deny';
+};
 
 type BeforeParseFeed = {
   userId: string;
@@ -13,12 +13,12 @@ type BeforeParseFeed = {
   title: string;
   description: string;
   notice: string;
-  noticeType: "discord";
+  noticeType: 'discord';
   cycles: string;
   rules: Rule[];
 };
 
-type Feed = BeforeParseFeed
+type Feed = BeforeParseFeed;
 
 const FILE_PATH = `${__dirname}/../.local/feeds.json`;
 
@@ -26,7 +26,7 @@ const _readFile = () => {
   const file = readFileSync(FILE_PATH);
   const data = JSON.parse(file.toString()).data as BeforeParseFeed[];
   const parsedData: Feed[] = data.map((v) => {
-    return v
+    return v;
   });
   return parsedData;
 };
@@ -50,11 +50,11 @@ export const feeds = {
     const data = _readFile();
     const item = data.find((v) => v.userId === id);
     if (!item) {
-      throw new Error("itemがありません");
+      throw new Error('itemがありません');
     }
     const newData = data.map((v) => {
       return v.userId === id ? newItem : v;
     });
     _writeFile(newData);
-  },
+  }
 };

@@ -1,9 +1,9 @@
-export const sendMessage = async (url:string,payload: object) => {
+export const sendMessage = async (url: string, payload: object) => {
   await fetch(url, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(payload),
-  })
+    body: JSON.stringify(payload)
+  });
 };
