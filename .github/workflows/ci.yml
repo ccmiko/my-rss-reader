@@ -5,13 +5,16 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -29,3 +32,22 @@ jobs:
 
       - name: ビルド
         run: npm run build
+
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/aws
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: hashicorp/setup-terraform@v4
+
+      - name: フォーマット確認
+        run: terraform fmt -check -recursive
+
+      # AWSには接続しない（stateを読まず、構文と参照の整合性だけを確認する）
+      - name: 構文チェック
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate

@@ -1,35 +1,47 @@
 locals {
   lambda_exec_arn = aws_lambda_function.rss_reader.arn
-  dynamodb_resources = [
-    aws_dynamodb_table.executes.arn,
-    aws_dynamodb_table.feeds.arn,
-    aws_dynamodb_table.users.arn,
-  ]
 }
 
+# Lambdaには、コードが実際に使う操作だけを許可する
 data "aws_iam_policy_document" "lambda_exec_policy" {
+  # users: 全ユーザーの取得（src/repo/dynamodb/users.ts）
   statement {
-    actions = [
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:UpdateItem",
-      "dynamodb:BatchGetItem",
-      "dynamodb:BatchWriteItem",
-      "dynamodb:Query",
-      "dynamodb:Scan",
-    ]
+    sid       = "UsersRead"
+    actions   = ["dynamodb:Scan"]
     effect    = "Allow"
-    resources = local.dynamodb_resources
+    resources = [aws_dynamodb_table.users.arn]
   }
 
+  # feeds: ユーザー単位のフィード取得（src/repo/dynamodb/feeds.ts）
   statement {
+    sid       = "FeedsRead"
+    actions   = ["dynamodb:Query"]
+    effect    = "Allow"
+    resources = [aws_dynamodb_table.feeds.arn]
+  }
+
+  # executes: 実行履歴の読み書き（src/repo/dynamodb/executes.ts）
+  statement {
+    sid = "ExecutesReadWrite"
     actions = [
-      "logs:CreateLogGroup",
+      "dynamodb:Query",
+      "dynamodb:BatchGetItem",
+      "dynamodb:PutItem",
+      "dynamodb:BatchWriteItem",
+    ]
+    effect    = "Allow"
+    resources = [aws_dynamodb_table.executes.arn]
+  }
+
+  # ロググループはTerraformで作成済み（lambda.tf）のため、CreateLogGroupは不要
+  statement {
+    sid = "WriteLogs"
+    actions = [
       "logs:CreateLogStream",
       "logs:PutLogEvents",
     ]
     effect    = "Allow"
-    resources = ["arn:aws:logs:*:*:*"]
+    resources = ["${aws_cloudwatch_log_group.rss_reader.arn}:*"]
   }
 }
 

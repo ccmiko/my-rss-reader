@@ -66,7 +66,9 @@ const _getNoticeItems = (feedItems: ParsedFeed[], rules: RuleType[], lastSucceed
 const _handleNoticeItem = async (feedTitle: string, feed: Feed, item: ParsedFeed) => {
   const { title, link } = item;
   const payload = {
-    content: `🦊こんこん！新着通知じゃ！🦊\n**${feedTitle}**\n${title}\n<${link}>`
+    content: `🦊こんこん！新着通知じゃ！🦊\n**${feedTitle}**\n${title}\n<${link}>`,
+    // フィード由来の文字列に @everyone などが含まれていてもメンションさせない
+    allowed_mentions: { parse: [] }
   };
   await sendMessage(feed.notice, payload);
 };

@@ -23,7 +23,8 @@ async function main() {
     if (user) {
       const { userId, notice } = user;
       const payload = {
-        content: `🦊むう！エラーが発生したぞい...🦊\nuserId: ${userId}`
+        content: `🦊むう！エラーが発生したぞい...🦊\nuserId: ${userId}`,
+        allowed_mentions: { parse: [] }
       };
       await sendMessage(notice, payload);
     }
