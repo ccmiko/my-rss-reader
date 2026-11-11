@@ -7,8 +7,8 @@
     "build": "tsdown",
     "local:debug": "tsx src/test.ts",
     "local:execute": "node ./dist/index.cjs",
-    "lint": "npm run format && tsc --noEmit && publint && eslint ./src/ --ext .ts",
-    "format": "eslint --fix ./src/ --ext .ts && prettier --write ./src/"
+    "lint": "npm run format && tsc --noEmit && publint && eslint ./src/",
+    "format": "eslint --fix ./src/ && prettier --write ./src/"
   },
   "author": "",
   "license": "GPL-3.0-only",
